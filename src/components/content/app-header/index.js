@@ -14,7 +14,7 @@ export default memo(function DHAppHeader() {
     // 前3个链接是路由跳转，后3个是a标签跳转
     if (index < 3) {
       return (
-        <NavLink to={item.link} exact>
+        <NavLink to={item.link}>
           {item.title}
           <i className="sprite_01 icon"></i>
         </NavLink>

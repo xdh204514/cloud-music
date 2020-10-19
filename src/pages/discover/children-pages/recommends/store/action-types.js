@@ -1,0 +1,1 @@
+export const CHANGE_TOP_BANNERS = "recommends/CHANGE_TOP_BANNERS"

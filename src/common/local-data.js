@@ -9,7 +9,7 @@ export const headerLinks = [
   },
   {
     title: "朋友",
-    link: "/friend"
+    link: "/friends"
   },
   {
     title: "商城",
@@ -71,7 +71,7 @@ export const footerImages = [
 export const dicoverMenu = [
   {
     title: "推荐",
-    link: "/discover/recommend"
+    link: "/discover/recommends"
   },
   {
     title: "排行榜",
@@ -83,14 +83,14 @@ export const dicoverMenu = [
   },
   {
     title: "主播电台",
-    link: "/discover/djradio"
+    link: "/discover/djradios"
   },
   {
     title: "歌手",
-    link: "/discover/artist"
+    link: "/discover/artists"
   },
   {
     title: "新碟上架",
-    link: "/discover/album"
+    link: "/discover/albums"
   },
 ]
