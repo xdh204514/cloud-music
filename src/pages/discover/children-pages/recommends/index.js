@@ -1,26 +1,31 @@
-import React, { memo, useEffect } from 'react'
-import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import React, { memo } from 'react'
 
-import { getTopBannersAction } from './store/actions'
+import {
+  RecommendWrapper,
+  Content,
+  RecommendLeft,
+  RecommendRight
+} from './style'
+
+import DHTopBanner from './children-cpns/top-banner'
+import DHHotRecommend from './children-cpns/hot-recommend'
+import DHNewAlbum from './children-cpns/new-album'
+import DHRecommendRank from './children-cpns/recommend-rank'
 
 function DHRecmmends(props) {
-  
-  // 通过 redux-hook 获取 dispatch 和 state 中的数据
-  const { topBanners } = useSelector(state => ({
-    // topBanners: state.get("recommends").get("topBanners")
-    topBanners: state.getIn(["recommends", "topBanners"])
-  }), shallowEqual)
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-    // 发送网络请求
-    dispatch(getTopBannersAction())
-  }, [dispatch])
 
   return (
-    <div>
-      <h2>DHRecmmends:{topBanners.length}</h2>
-    </div>
+    <RecommendWrapper>
+      <DHTopBanner />
+      <Content className="wrap-v2">
+        <RecommendLeft>
+          <DHHotRecommend />
+          <DHNewAlbum />
+          <DHRecommendRank/>
+        </RecommendLeft>
+        <RecommendRight></RecommendRight>
+      </Content>
+    </RecommendWrapper>
   )
 }
 
@@ -45,7 +50,7 @@ export default memo(DHRecmmends)
 
 // function DHRecmmends(props) {
 //   const { topBanners, getTopBanners } = props
-  
+
 //   useEffect(() => {
 //     getTopBanners()
 //   }, [getTopBanners])

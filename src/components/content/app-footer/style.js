@@ -8,7 +8,7 @@ export const FooterWrapped = styled.div`
 
   .content {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
   }
 `
@@ -43,12 +43,15 @@ export const FooterLeft = styled.div`
 
 export const FooterRight = styled.ul`
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 360px;
 
   .item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 40px;
+    /* margin-right: 40px; */
 
     .link {
       display: block;

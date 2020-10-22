@@ -54,6 +54,21 @@ body, textarea, select, input, button {
   overflow: hidden;
 }
 
+.a-nowrap {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.a-nowrap2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; 
+}
+
 .wrap-v1 {
   width: 1100px;
   margin: 0 auto;
@@ -62,6 +77,10 @@ body, textarea, select, input, button {
 .wrap-v2 {
   width: 980px;
   margin: 0 auto;
+}
+
+.wrap-v3 {
+  padding: 20px 20xp 20px 40px;
 }
 
 .sprite_01 {
@@ -117,5 +136,7 @@ body, textarea, select, input, button {
   bottom: 50px;
   background-color: rgba(0, 0, 0, .5);
   color: #fff;
+  border-radius: 10px;
+  padding: 8px 14px;
 }
 

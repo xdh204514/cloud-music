@@ -2,6 +2,9 @@ import fetch from '../../../fetch'
 
 const recommends = {
   getTopBanners: '/banner',  // 推荐页轮播图
+  getHotRecommends: "/personalized",
+  getNewAlbums: "/top/album",
+  getPlayList: "/playlist/detail",
 };
 
 
@@ -10,6 +13,30 @@ export function getTopBanners(params,) {
     url: recommends.getTopBanners,
     method: 'get',
     params
+  })
+}
+
+export function getHotRecommends(params) {
+  return fetch({
+    url: recommends.getHotRecommends,
+    method: "get",
+    params,
+  })
+}
+
+export function getNewAlbums(params) {
+  return fetch({
+    url: recommends.getNewAlbums,
+    method: "get",
+    params,
+  })
+}
+
+export function getPlayList(params) {
+  return fetch({
+    url: recommends.getPlayList,
+    method: "get",
+    params,
   })
 }
 
