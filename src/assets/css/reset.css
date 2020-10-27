@@ -80,6 +80,11 @@ body, textarea, select, input, button {
 }
 
 .wrap-v3 {
+  width: 986px;
+  margin: 0 auto;
+}
+
+.wrap-v3 {
   padding: 20px 20xp 20px 40px;
 }
 
@@ -129,14 +134,38 @@ body, textarea, select, input, button {
   background: url(../img/playbar_sprite.png) no-repeat 0 9999px;
 }
 
+.sprite_playlist {
+  background: url(../img/sprite_playlist.png) no-repeat 0 9999px;
+}
+
 .lyric-class .ant-message-notice-content {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
   bottom: 50px;
-  background-color: rgba(0, 0, 0, .5);
-  color: #fff;
-  border-radius: 10px;
-  padding: 8px 14px;
+  padding: 0 0;
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: 700;
+
+  /* 彩色效果字体 */
+  /* background: -webkit-linear-gradient(45deg, #00a0e9, #10d39d, #00a0e9, #10d39d);
+  color: transparent;
+  animation: ran 20s linear infinite;
+  background-clip: text; */
+
+
+  background-image: 
+        -webkit-gradient( linear, left top, right top, color-stop(0, #f22), 
+        color-stop(0.15, #f2f), 
+        color-stop(0.3, #22f), 
+        color-stop(0.45, #2ff), 
+        color-stop(0.6, #2f2),
+        color-stop(0.75, #2f2), 
+        color-stop(0.9, #ff2), 
+        color-stop(1, #f22) );
+    color: transparent;
+    background-clip: text;
+
 }
 

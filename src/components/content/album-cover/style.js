@@ -32,10 +32,18 @@ export const AlbumCoverWrapper = styled.div`
       width: 22px;
       height: 22px;
       text-indent: -9999px;
+      cursor: pointer;
+
+      &:hover {
+        background-position: 0 -110px;
+        cursor: pointer;
+      }
     }
   }
 
   .album-info {
+    display: flex;
+    flex-direction: column;
     width: ${props => props.size + "px"};
     .name {
       color: #000

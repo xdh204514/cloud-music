@@ -6,6 +6,7 @@ import { getSongDetailAction, changePlayMusicAction, changeSequenceAction, chang
 import { AppPlayerBar, Control, PlayInfo, Operator } from './style'
 
 import { Slider, message } from 'antd'
+import DHAppPlayPanel from '../app-play-panel'
 
 export default memo(function DHAppPlayBar() {
 
@@ -16,19 +17,22 @@ export default memo(function DHAppPlayBar() {
   const [isChangeSlide, setIsChangeSlide] = useState(false)  // 当前是否在拖动进度条
   const loopTitle = ["列表循环", "单曲循环", "随机播放"]
   const [currentLoopTitle, setCurrentLoopTitle] = useState("列表循环")
+  const [showPanel, setShowPanel] = useState(true)
 
   // redux-hooks
   const dispatch = useDispatch()
-  const { 
-    currentSong = {}, 
-    sequence = 0, 
-    lyricList = [], 
-    currentLyricIndex = 0 
+  const {
+    currentSong = {},
+    sequence = 0,
+    lyricList = [],
+    currentLyricIndex = 0,
+    playList = [],
   } = useSelector(state => ({
     currentSong: state.getIn(["player", "currentSong"]),
     sequence: state.getIn(["player", "sequence"]),
     lyricList: state.getIn(["player", "lyricList"]),
     currentLyricIndex: state.getIn(["player", "currentLyricIndex"]),
+    playList: state.getIn(["player", "playList"])
   }), shallowEqual)
 
   //react-hooks
@@ -52,11 +56,12 @@ export default memo(function DHAppPlayBar() {
 
   // other handle 
   const picUrl = (currentSong.al && currentSong.al.picUrl) || ""
-  const singerName = (currentSong.ar && currentSong.al.name) || ""
+  const singerName = (currentSong.ar && currentSong.ar[0].name) || ""
   const songName = currentSong.name || ""
   const duration = currentSong.dt || 0
   const showDuration = formatDate(duration, "mm:ss");
   const showCurrentTie = formatDate(currentTime, "mm:ss")
+  const showMv = currentSong.mv !== 0 ? true : false
 
   const playMusic = useCallback(() => {
     isPlaying ? audioRef.current.pause() : audioRef.current.play()
@@ -78,16 +83,16 @@ export default memo(function DHAppPlayBar() {
      *  所以最终展示的时候需要 i - 1
      */
     let i = 0
-    for(; i < lyricList.length; i++) {
+    for (; i < lyricList.length; i++) {
       let lyricItem = lyricList[i]
-      if(lyricItem.time > currentTime) {
+      if (lyricItem.time > currentTime) {
         break
       }
     }
 
     // 判断当前获取到的 i-1 和 currentLyricIndex 进行对比，如果 i-1 和 currentLyricIndex 不同才进行dispatch
-    if(currentLyricIndex !== i-1) {
-      dispatch(changeCurrentLyricIndexAction(i-1))
+    if (currentLyricIndex !== i - 1) {
+      dispatch(changeCurrentLyricIndexAction(i - 1))
       const content = lyricList[i - 1] && lyricList[i - 1].content
       if (currentSong !== {}) {
         message.open({
@@ -121,13 +126,17 @@ export default memo(function DHAppPlayBar() {
   }, [isPlaying, duration, playMusic])
 
   const changePalyMusic = (tag) => {
-    dispatch(changePlayMusicAction(tag))
-    audioRef.current.currentTime = 0;
-    audioRef.current.play().then(res => {
-      setIsPlaying(true);
-    }).catch(err => {
-      setIsPlaying(false);
-    });;
+    if (playList.length !== 0) {
+      dispatch(changePlayMusicAction(tag))
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().then(res => {
+        setIsPlaying(true);
+      }).catch(err => {
+        setIsPlaying(false);
+      });;
+    } else {
+      return
+    }
   }
 
   const changeSequence = useCallback(() => {
@@ -163,16 +172,30 @@ export default memo(function DHAppPlayBar() {
         <PlayInfo>
           <div className="image">
             <a href="/todo">
-              <img src={getSizeImage(picUrl, 34)} alt="" />
+              {
+                picUrl !== "" ? (
+                  <img src={getSizeImage(picUrl, 34)} alt="" />
+                ) : (
+                    <img src={require("@/assets/img/default_album.jpg")} alt="" />
+                  )
+              }
             </a>
           </div>
           <div className="info">
-            <div className="song">
-              <a className="song-name" href="/todo">{songName}</a>
-              <a className="sprite_player mv" href="/todo"> </a>
-              <a className="singer-name" href="/todo">{singerName}</a>
-              <a className="sprite_player source" href="/todo"> </a>
-            </div>
+            {
+              currentSong.id ? (
+                <div className="song">
+                  <a className="song-name" href="/todo">{songName}</a>
+                  {
+                    currentSong && showMv ? <a className="sprite_player mv" href="/todo"> </a> : ""
+                  }
+                  <a className="singer-name" href="/todo">{singerName}</a>
+                  <a className="sprite_player source" href="/todo"> </a>
+                </div>
+              ) : (
+                  <div className="song-placeholder"></div>
+                )
+            }
             <div className="progress">
               <Slider defaultValue={0}
                 value={progress}
@@ -196,15 +219,20 @@ export default memo(function DHAppPlayBar() {
           <div className="right sprite_player">
             <button className="sprite_player btn volume" ></button>
             <button className="sprite_player btn loop" title={currentLoopTitle} onClick={event => changeSequence()}></button>
-            <button className="sprite_player btn playlist" title="播放列表"></button>
+            <button className="sprite_player btn playlist" title="播放列表" onClick={event => setShowPanel(!showPanel)}>
+              {playList.length}
+            </button>
           </div>
         </Operator>
       </div>
-      <audio 
+      <audio
         ref={audioRef}
         onTimeUpdate={event => getCurrentTime(event)}
         onEnded={event => handleMusicEnded()}
       />
+      {
+        showPanel && <DHAppPlayPanel />
+      }
     </AppPlayerBar>
   )
 })

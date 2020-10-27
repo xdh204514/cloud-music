@@ -15,6 +15,9 @@ export const SongCoverWrapper = styled.div`
 
   .cover-top {
     position: relative;
+    &:hover {
+      cursor: pointer;
+    }
     .img {
       width: 140px;
       height: 140px;
@@ -53,6 +56,10 @@ export const SongCoverWrapper = styled.div`
           width: 16px;
           height: 17px;
           background-position: 0 0;
+        }
+
+        .play:hover {
+          background-position: 0 -60px;
         }
       }
     }

@@ -84,6 +84,10 @@ export const PlayInfo = styled.div`
     color: #a1a1a1;
     margin-left: 10px;
 
+    .song-placeholder {
+      height: 18px
+    }
+
     .song {
       display: flex;
       position: relative;
@@ -168,6 +172,7 @@ export const Operator = styled.div`
   display: flex;
   position: relative;
   top: 5px;
+  width: 186px;
 
   .btn {
     width: 25px;
@@ -199,6 +204,7 @@ export const Operator = styled.div`
     width: 126px;
     padding-left: 13px;
     background-position: -147px -248px;
+    display: flex;
     
     .volume {
       background-position: -2px -248px;
@@ -239,6 +245,9 @@ export const Operator = styled.div`
     }
 
     .playlist {
+      padding-left: 18px;
+      text-align: center;
+      color: #ccc;
       width: 59px;
       background-position: -42px -68px;
     }

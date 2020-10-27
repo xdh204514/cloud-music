@@ -43,19 +43,19 @@ export const TopRankingWrapper = styled.div`
       }
 
       .play {
-        &>a {
+        &>button {
           background-position: -267px -205px;
         }
-        &>a:hover {
+        &>button:hover {
           background-position: -267px -235px;
         }
       }
 
       .favor {
-        &>a {
+        &>button {
           background-position: -300px -205px;
         }
-        &>a:hover {
+        &>button:hover {
           background-position: -300px -235px;
         }
       }

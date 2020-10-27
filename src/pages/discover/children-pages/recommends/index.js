@@ -16,7 +16,6 @@ function DHRecmmends(props) {
 
   return (
     <RecommendWrapper>
-      <h1>hahaha</h1>
       <DHTopBanner />
       <Content className="wrap-v2">
         <RecommendLeft>

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { getSizeImage } from '@/utils/format-utils'
 import { TopRankingWrapper } from './style'
-import { getSongDetailAction } from '@/pages/player/store'
+import { getSongDetailAction, resetPlayListAction } from '@/pages/player/store'
 
 
 export default memo(function DHTopRanking(props) {
@@ -16,8 +16,24 @@ export default memo(function DHTopRanking(props) {
   // react-hooks
 
   // other handle
+  const resetPlayList = (id) => {
+    dispatch(resetPlayListAction({id: id}))
+  }
+
   const playMusic = (item) => {
-    dispatch(getSongDetailAction({ids: item.id}));
+    const params = {
+      ids: item.id,
+      isPlayNow: true,
+    }
+    dispatch(getSongDetailAction(params));
+  }
+
+  const addToPlayList = (item) => {
+    const params = {
+      ids: item.id,
+      isPlayNow: false,
+    }
+    dispatch(getSongDetailAction(params));
   }
 
   return (
@@ -31,10 +47,10 @@ export default memo(function DHTopRanking(props) {
           <a className="name" href="/todo" title={info.name}>{info.name}</a>
           <div className="btns">
             <div className="play">
-              <a className="btn sprite_02" href="/todo" title="播放"> </a>
+              <button className="btn sprite_02" title="播放" onClick={event => resetPlayList(info.id)}> </button>
             </div>
             <div className="favor">
-              <a className="btn sprite_02" href="/todo" title="收藏"> </a>
+              <button className="btn sprite_02" href="/todo" title="收藏"> </button>
             </div>
           </div>
         </div>
@@ -52,7 +68,7 @@ export default memo(function DHTopRanking(props) {
                       <button className="btn sprite_02 play" title="播放"  onClick={event => playMusic(item)}></button>
                     </div>
                     <div className="btn2">
-                      <button className="btn sprite_icon2 addto" title="添加到播放列表"></button>
+                      <button className="btn sprite_icon2 addto" title="添加到播放列表" onClick={event => addToPlayList(item)}></button>
                     </div>
                     <div className="btn3">
                       <button className="btn sprite_02 favor" title="收藏"></button>

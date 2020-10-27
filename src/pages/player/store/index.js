@@ -1,7 +1,9 @@
 import reducer from './reducer'
-import { getSongDetailAction } from './actions'
+import { getSongDetailAction, resetPlayListAction, deleteOneInPlayListAction } from './actions'
 
 export {
   reducer,
   getSongDetailAction, 
+  resetPlayListAction,
+  deleteOneInPlayListAction,
 }
