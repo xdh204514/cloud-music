@@ -1,12 +1,19 @@
-import React, { memo, useState, useEffect, useRef, useCallback } from 'react'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import React, { memo, useState, useEffect, useRef, useCallback } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-import { getSizeImage, formatDate, getPlayMusicUrl } from '@/utils/format-utils'
-import { getSongDetailAction, changePlayMusicAction, changeSequenceAction, changeCurrentLyricIndexAction } from '../../store/actions'
-import { AppPlayerBar, Control, PlayInfo, Operator } from './style'
+import {
+  getSongDetailAction,
+  changePlayMusicAction,
+  changeSequenceAction,
+  changeCurrentLyricIndexAction,
+  changeShowPlayPanelAction
+} from '../../store/actions';
+import { getSizeImage, formatDate, getPlayMusicUrl } from '@/utils/format-utils';
+import { AppPlayerBar, Control, PlayInfo, Operator } from './style';
 
-import { Slider, message } from 'antd'
-import DHAppPlayPanel from '../app-play-panel'
+import { Slider, message } from 'antd';
+import DHAppPlayPanel from '../app-play-panel';
 
 export default memo(function DHAppPlayBar() {
 
@@ -17,7 +24,6 @@ export default memo(function DHAppPlayBar() {
   const [isChangeSlide, setIsChangeSlide] = useState(false)  // 当前是否在拖动进度条
   const loopTitle = ["列表循环", "单曲循环", "随机播放"]
   const [currentLoopTitle, setCurrentLoopTitle] = useState("列表循环")
-  const [showPanel, setShowPanel] = useState(true)
 
   // redux-hooks
   const dispatch = useDispatch()
@@ -27,12 +33,14 @@ export default memo(function DHAppPlayBar() {
     lyricList = [],
     currentLyricIndex = 0,
     playList = [],
+    showPlayPanel = false,
   } = useSelector(state => ({
     currentSong: state.getIn(["player", "currentSong"]),
     sequence: state.getIn(["player", "sequence"]),
     lyricList: state.getIn(["player", "lyricList"]),
     currentLyricIndex: state.getIn(["player", "currentLyricIndex"]),
-    playList: state.getIn(["player", "playList"])
+    playList: state.getIn(["player", "playList"]),
+    showPlayPanel: state.getIn(["player", "showPlayPanel"]),
   }), shallowEqual)
 
   //react-hooks
@@ -94,7 +102,7 @@ export default memo(function DHAppPlayBar() {
     if (currentLyricIndex !== i - 1) {
       dispatch(changeCurrentLyricIndexAction(i - 1))
       const content = lyricList[i - 1] && lyricList[i - 1].content
-      if (currentSong !== {}) {
+      if (currentSong !== {} && !showPlayPanel) {
         message.open({
           key: "lyric",
           content: content,
@@ -161,6 +169,11 @@ export default memo(function DHAppPlayBar() {
     }
   }
 
+  const changeShowPlayPanel = () => {
+    dispatch(changeShowPlayPanelAction(!showPlayPanel))
+    message.destroy("lyric")
+  }
+
   return (
     <AppPlayerBar className="sprite_player">
       <div className="content wrap-v2">
@@ -171,15 +184,19 @@ export default memo(function DHAppPlayBar() {
         </Control>
         <PlayInfo>
           <div className="image">
-            <a href="/todo">
-              {
-                picUrl !== "" ? (
+            {
+              picUrl !== "" ? (
+                <NavLink to={{
+                  pathname: "/discover/song",
+                  search: "?id=" + currentSong.id,
+                  state: {id: currentSong.id},
+                }}>
                   <img src={getSizeImage(picUrl, 34)} alt="" />
-                ) : (
-                    <img src={require("@/assets/img/default_album.jpg")} alt="" />
-                  )
-              }
-            </a>
+                </NavLink>
+              ) : (
+                <img src={require("@/assets/img/default_album.jpg")} alt="" />
+              )
+            }
           </div>
           <div className="info">
             {
@@ -219,7 +236,7 @@ export default memo(function DHAppPlayBar() {
           <div className="right sprite_player">
             <button className="sprite_player btn volume" ></button>
             <button className="sprite_player btn loop" title={currentLoopTitle} onClick={event => changeSequence()}></button>
-            <button className="sprite_player btn playlist" title="播放列表" onClick={event => setShowPanel(!showPanel)}>
+            <button className="sprite_player btn playlist" title="播放列表" onClick={event => changeShowPlayPanel()}>
               {playList.length}
             </button>
           </div>
@@ -231,8 +248,11 @@ export default memo(function DHAppPlayBar() {
         onEnded={event => handleMusicEnded()}
       />
       {
-        showPanel && <DHAppPlayPanel />
+        showPlayPanel && <DHAppPlayPanel />
       }
     </AppPlayerBar>
   )
 })
+
+
+// export default withRouter(MemeDHPlayerBar)

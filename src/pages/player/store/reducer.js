@@ -288,6 +288,14 @@ const defaultState = Map({
   sequence: 0,  // 0：列表循环  1：单曲循环  2： 随机播放
   lyricList: [],
   currentLyricIndex: 0,
+  showPlayPanel: false,
+
+
+  playerCurrentSong: {},  // player 组件中（歌曲详情页）当前歌曲
+  playerLyricList: [],  // player 组件中（歌曲详情页）当前歌曲的歌词
+  playerSimiSongList: [],  // player 组件中（歌曲详情页）相似歌曲
+  playerSimiPlayList: [],  // player 组件中（歌曲详情页）相似歌单
+  playerMusicComment: {},  // player 组件中（歌曲详情页）歌曲评论
 })
 
 function reducer(state = defaultState, action) {
@@ -304,6 +312,18 @@ function reducer(state = defaultState, action) {
       return state.set("lyricList", action.lyricList)
     case actionTypes.CHANGE_CURRENT_LYRIC_INDEX:
       return state.set("currentLyricIndex", action.currentLyricIndex)
+    case actionTypes.CHANGE_SHOW_PLAY_PANEL:
+      return state.set("showPlayPanel", action.showPlayPanel)
+    case actionTypes.CHANGE_PLAYER_CURRENT_SONG:
+      return state.set("playerCurrentSong", action.playerCurrentSong)
+    case actionTypes.CHANGE_PLAYER_SIMI_SONG_LIST:
+      return state.set("playerSimiSongList", action.playerSimiSongList)
+    case actionTypes.CHANGE_PLAYER_SIMI_PLAY_LIST:
+      return state.set("playerSimiPlayList", action.playerSimiPlayList)
+    case actionTypes.CHANGE_PLAYER_LYRIC_LIST:
+      return state.set("playerLyricList", action.playerLyricList)
+    case actionTypes.CHANGE_PLAYER_MUSIC_COMMENT:
+      return state.set("playerMusicComment", action.playerMusicComment)
     default:
       return state
   }

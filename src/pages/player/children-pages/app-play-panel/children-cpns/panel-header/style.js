@@ -76,4 +76,28 @@ export const PanleHeaderRight = styled.div`
   padding: 0 10px;
   color: #fff;
   font-size: 14px;
+
+  .closeBtn {
+    background-color: transparent;
+    color: #ccc;
+    position: absolute;
+    right: 10px;
+
+    .icon {
+      display: inline-block;
+      position: relative;
+      top: 3px;
+      right: 2px;
+      margin-right: 5px;
+      width: 10px;
+      height: 10px;
+    }
+
+    .close {
+      background-position: -205px 0;
+      &:hover{
+        background-position: -205px -30px;
+      }
+    }
+  }
 `

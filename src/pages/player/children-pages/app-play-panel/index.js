@@ -11,6 +11,7 @@ export default memo(function DHAppPlayPanel() {
 
   const { currentSong = {} } = useSelector(state => ({
     currentSong: state.getIn(["player", "currentSong"])
+    
   }))
 
   let picUrl = currentSong.al ? currentSong.al.picUrl + "?imageView&blur=40x20" : ""

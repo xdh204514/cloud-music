@@ -49,3 +49,14 @@ export function formatMinuteSecond(time) {
 export function getPlayMusicUrl(id) {
   return `https://music.163.com/song/media/outer/url?id=${id}.mp3`
 }
+
+export function getUpdateFrequency(current, list) {
+  let updateFrequency = ""
+  if (list) {
+    const result = list.filter(item => {
+      return item.id === current.id
+    })
+    updateFrequency = result[0] && result[0].updateFrequency 
+  }
+  return updateFrequency
+}

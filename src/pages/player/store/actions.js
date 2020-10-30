@@ -25,6 +25,22 @@ const changeLyricListAction = (lyricList) => ({
   lyricList
 })
 
+
+const changePlayerCurrentSongActioin = (playerCurrentSong) => ({
+  type: actionTypes.CHANGE_PLAYER_CURRENT_SONG,
+  playerCurrentSong
+})
+
+const changePlayerSimiSongListActioin = (playerSimiSongList) => ({
+  type: actionTypes.CHANGE_PLAYER_SIMI_SONG_LIST,
+  playerSimiSongList
+})
+
+const changePlayerSimiPlayListActioin = (playerSimiPlayList) => ({
+  type: actionTypes.CHANGE_PLAYER_SIMI_PLAY_LIST,
+  playerSimiPlayList
+})
+
 // 立即播放点击歌曲
 const getSongDetailActionNow = (data) => {
   const { dispatch, willPlayIndex, currentPlayList, needPlayIds } = data
@@ -181,7 +197,7 @@ export const deleteOneInPlayListAction = (params) => {
     dispatch(changePlayListAciotn(newPlayList))
 
     // 当删除的歌的 index 小于当前播放的 currentSongIndex，则将 currentSongIndex 往前移1位
-    if ( 0 < deleteIndex < currentSongIndex) {
+    if (0 < deleteIndex < currentSongIndex) {
       dispatch(changeCurrentSongIndexAciotn(currentSongIndex - 1))
     }
 
@@ -196,6 +212,102 @@ export const deleteOneInPlayListAction = (params) => {
         dispatch(changeCurrentSongIndexAciotn(willPlayIndex))
         dispatch(changePlayMusicAction(1))
       }
+    }
+  }
+}
+
+export const changeShowPlayPanelAction = (showPlayPanel) => ({
+  type: actionTypes.CHANGE_SHOW_PLAY_PANEL,
+  showPlayPanel
+})
+
+const changePlayerLyricListAction = (playerLyricList) => ({
+  type: actionTypes.CHANGE_PLAYER_LYRIC_LIST,
+  playerLyricList
+})
+
+export const getPlayerCurrentSongAction = (params) => {
+  return dispatch => {
+    fetch.apiPlayer.player.getCurrentSong(params).then(result => {
+      const song = result.songs && result.songs[0];
+      dispatch(changePlayerCurrentSongActioin(song))
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+}
+
+export const getPlayerLyricListAction = (params) => {
+  return dispatch => {
+    fetch.apiPlayer.player.getSongLyric(params).then(result => {
+      const lyricList = parseLyric(result.lrc.lyric)
+      dispatch(changePlayerLyricListAction(lyricList))
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+}
+
+export const getPlayerSimiSongListAction = (params) => {
+  return dispatch => {
+    fetch.apiPlayer.player.getSimiSongList(params).then(result => {
+      const simiSongList = result.songs
+      dispatch(changePlayerSimiSongListActioin(simiSongList))
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+}
+
+export const getPlayerSimiPlayListAction = (params) => {
+  return dispatch => {
+    fetch.apiPlayer.player.getSimiPlayList(params).then(result => {
+      const simiPlayList = result.playlists
+      dispatch(changePlayerSimiPlayListActioin(simiPlayList))
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+}
+
+const changePlayerMusicCommentAction = (playerMusicComment) => ({
+  type: actionTypes.CHANGE_PLAYER_MUSIC_COMMENT,
+  playerMusicComment
+})
+
+export const getPlayerMusicCommentAction = (params) => {
+  return dispatch => {
+    fetch.apiPlayer.player.getPlayerMusicComment(params).then(result => {
+      dispatch(changePlayerMusicCommentAction(result))
+    }).catch(error => {
+      console.log(error)
+    })
+  }
+}
+
+/**
+ * 在排行榜点击播放按钮：
+ *  - 清空当前播放列表，修改为该榜单的歌曲列表
+ *  - 播放当前播放列表的第一首歌曲
+ *  - 修改当前播放歌曲的歌词
+ * 在排行榜点击添加按钮
+ *  - 往当前播放列表后填充数据
+ */
+export const changePlayListInRanking = (params) => {
+  return (dispatch, getState) => {
+    const { isPlayNow } = params
+    // 当前榜单列表
+    const currentPlayList = getState().getIn(["ranking", "currentPlayList"]).tracks
+    if (isPlayNow) {
+      dispatch(changePlayListAciotn(currentPlayList))
+      dispatch(changeCurrentSongIndexAciotn(0))
+      dispatch(changeCurrentSongAciotn(currentPlayList[0]))
+      dispatch(getSongLyricAction({ id: currentPlayList[0].id }));
+    } else {
+      // 原播放列表
+      const oldPlayList = getState().getIn(["player", "playList"])
+      const newPlayList = [...oldPlayList, ...currentPlayList]
+      dispatch(changePlayListAciotn(newPlayList))
     }
   }
 }

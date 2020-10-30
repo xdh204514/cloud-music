@@ -5,6 +5,8 @@ import { Redirect } from "react-router-dom";
 const DHDiscover = React.lazy(() => import('@/pages/discover'))
 const DHMine = React.lazy(() => import('@/pages/mine'))
 const DHFriends = React.lazy(() => import('@/pages/friends'))
+const DHPlayer = React.lazy(() => import('@/pages/player'))
+
 const DHAlbums = React.lazy(() => import('@/pages/discover/children-pages/albums'))
 const DHArtists = React.lazy(() => import('@/pages/discover/children-pages/artists'))
 const DHDjRadios = React.lazy(() => import('@/pages/discover/children-pages/djradios'))
@@ -27,7 +29,7 @@ const routes = [
     path: "/",
     exact: true,
     render: () => (
-      <Redirect to="/discover"/>
+      <Redirect to="/discover" />
     )
   },
   {
@@ -38,7 +40,7 @@ const routes = [
         path: "/discover",
         exact: true,
         render: () => (
-          <Redirect to="/discover/recommends"/>
+          <Redirect to="/discover/recommends" />
         )
       },
       {
@@ -64,7 +66,11 @@ const routes = [
       {
         path: "/discover/albums",
         component: DHAlbums
-      }
+      },
+      {
+        path: "/discover/song",
+        component: DHPlayer
+      },
     ]
   },
   {
@@ -74,7 +80,7 @@ const routes = [
   {
     path: "/friends",
     component: DHFriends
-  }
+  },
 ]
 
 export default routes

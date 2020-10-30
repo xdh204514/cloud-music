@@ -1,23 +1,28 @@
 import React, { memo } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 
+import { changeShowPlayPanelAction } from "@/pages/player/store"
 import { PanelHeaderWrapper, PanleHeaderLeft, PanleHeaderRight } from "./style"
 import { resetPlayListAction } from "@/pages/player/store"
 
 export default memo(function DHPanelHeader() {
-
   // state and props
 
   // redux-hooks
-  const { playList, currentSong } = useSelector(state => ({
+  const { playList, currentSong, showPlayPanel } = useSelector(state => ({
     playList: state.getIn(["player", "playList"]),
     currentSong: state.getIn(["player", "currentSong"]),
+    showPlayPanel: state.getIn(["player", "showPlayPanel"]),
   }), shallowEqual)
   const dispatch = useDispatch()
 
   // other handle
   const resetPlayList = (id) => {
     dispatch(resetPlayListAction({id}))
+  }
+
+  const changeShowPlayPanel = () => {
+    dispatch(changeShowPlayPanelAction(!showPlayPanel))
   }
 
   return (
@@ -37,6 +42,9 @@ export default memo(function DHPanelHeader() {
       </PanleHeaderLeft>
       <PanleHeaderRight>
         {currentSong.name}
+        <button className="closeBtn" onClick={event => changeShowPlayPanel()}>
+          <i className="sprite_playlist icon close"></i>
+        </button>
       </PanleHeaderRight>
     </PanelHeaderWrapper>
   )
