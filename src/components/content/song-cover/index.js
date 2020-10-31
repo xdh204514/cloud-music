@@ -8,7 +8,7 @@ import { resetPlayListAction } from '@/pages/player/store'
 export default memo(function DHSongCover(props) {
 
   // state and props
-  const { info, showWriter = true} = props
+  const { info, showWriter, right } = props
 
   // redux hooks
   const dispatch = useDispatch()
@@ -19,9 +19,9 @@ export default memo(function DHSongCover(props) {
   }
 
   return (
-    <SongCoverWrapper>
+    <SongCoverWrapper right={right}>
       <div className="cover-top">
-        <img src={getSizeImage(info.picUrl, 140)} alt={info.name} className="img"/>
+        <img src={getSizeImage(info.picUrl || info.coverImgUrl, 140)} alt={info.name} className="img"/>
         <div className="cover sprite_covor">
           <div className="info sprite_covor">
             <span>
@@ -32,8 +32,8 @@ export default memo(function DHSongCover(props) {
           </div>
         </div>
       </div>
-      <a href="/todo" className={"cover-name " + (showWriter ? "a-nowrap" : "a-nowrap")} title={info.name}>{info.name}</a>
-      <div className="cover-witer text-nowrap">{showWriter && "by" (info.copywriter || info.creator.nickname)}</div>
+      <a href="/todo" className={"cover-name " + (showWriter ? "a-nowrap" : "a-nowrap2")} title={info.name}>{info.name}</a>
+      <div className="cover-witer text-nowrap">{showWriter && ("by " + (info.copywriter || info.creator.nickname))}</div>
     </SongCoverWrapper>
   )
 })

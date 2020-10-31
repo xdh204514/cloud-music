@@ -30,7 +30,7 @@ export default memo(function DHAppHeader() {
     <HeaderWrapped>
       <div className="content wrap-v1">
         <HeaderLeft>
-          <a href="/" className="logo sprite_01">网易云音乐</a>
+          <a href="/" className="logo sprite_01">我的网易云</a>
           <div className="link-list">
             {
               headerLinks.map((item, index) => {

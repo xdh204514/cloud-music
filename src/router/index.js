@@ -12,7 +12,7 @@ const DHArtists = React.lazy(() => import('@/pages/discover/children-pages/artis
 const DHDjRadios = React.lazy(() => import('@/pages/discover/children-pages/djradios'))
 const DHRanking = React.lazy(() => import('@/pages/discover/children-pages/ranking'))
 const DHRecommends = React.lazy(() => import('@/pages/discover/children-pages/recommends'))
-const DHSongs = React.lazy(() => import('@/pages/discover/children-pages/songs'))
+const DHPlayList = React.lazy(() => import('@/pages/discover/children-pages/playlist'))
 
 // import DHDiscover from '@/pages/discover'
 // import DHMine from '@/pages/mine'
@@ -52,8 +52,8 @@ const routes = [
         component: DHRanking
       },
       {
-        path: "/discover/songs",
-        component: DHSongs
+        path: "/discover/playlist",
+        component: DHPlayList
       },
       {
         path: "/discover/djradios",
