@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { useSelector, useDispatch } from "react-redux"
 
 import { getCurrentPlayListAction, changeCurrentPageAction } from "../../store/actions";
-import { PER_PAGE_NUM } from "@/common/constant"
+import { PER_PAGE_NUM } from "@/common/constant";
 import { PlayListContentWrapper } from "./style";
 
 import DHSongCover from "@/components/content/song-cover";
