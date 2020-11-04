@@ -11,3 +11,5 @@ export const ORIGINAL_RANKING_ID = 2884035  // 网易原创歌曲榜ID
 export const PER_PAGE_NUM = 35  // 歌单列表每一页的歌单数量
 export const HOT_ACTION_PER_PAGE_NUM = 100  // 推荐歌手每一页的歌单数量
 
+export const RADIO_PER_PAGE_NUM = 30  // 电台排行榜每一页的电台数量
+

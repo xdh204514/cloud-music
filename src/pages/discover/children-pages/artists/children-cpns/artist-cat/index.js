@@ -31,7 +31,7 @@ export default memo(function DHArtistCat() {
       if (area === -1) {  // 获取入驻分类歌手列表
         dispatch(getArtistListAction({cat: 5001}))
       }
-    }
+    }  // 其他分类歌手会在修改了 currentArea、currentType之后，在 list-alpha 中进行分发 
   }
 
   const renderArtist = (artists, area) => {
