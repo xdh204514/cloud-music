@@ -96,6 +96,10 @@ body, textarea, select, input, button {
   background: url(../img/sprite_02.png) no-repeat 0 9999px;
 }
 
+.sprite_03 {
+  background: url(../img/sprite_03.png) no-repeat 0 9999px;
+}
+
 .sprite_covor {
   background: url(../img/sprite_cover.png) no-repeat 0 9999px;
 }
@@ -174,5 +178,23 @@ body, textarea, select, input, button {
         color-stop(1, #f22) );
     color: transparent;
     background-clip: text;
+}
+
+
+.back-top {
+  /* height: 40 !important; 
+  width: 40 !important;
+  line-height: '40px' !important;
+  border-radius: 4 !important;
+  background-color: '#1088e9' !important;
+  color: '#fff' !important;
+  text-align: 'center' !important;
+  font-size: 14 !important; */
+  position: fixed;
+  bottom: 200px;
+  right: 400px;
+  width: 49px;
+  height: 44px;
+  background-position: -265px -47px;
 }
 

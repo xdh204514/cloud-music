@@ -10,6 +10,7 @@ import DHAppHeader from '@/components/content/app-header';
 import DHAppFooter from '@/components/content/app-footer';
 import DHAppPlayBar from '@/pages/player/children-pages/app-play-bar'
 
+import { BackTop } from 'antd';
 
 export default memo(function App() {
   return (
@@ -22,6 +23,9 @@ export default memo(function App() {
         <DHAppFooter />
         <DHAppPlayBar />
       </BrowserRouter>
+      <BackTop>
+        <div className="back-top sprite_03"></div>
+      </BackTop>
     </Provider>
   )
 })
